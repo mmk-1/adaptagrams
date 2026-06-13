@@ -380,6 +380,13 @@ public:
     //! @sa Graph::recomputeIEL
     double getIEL(void);
 
+    //! @brief  Set the ideal edge length for this Graph.
+    //!
+    //! @param[in] iel  The ideal edge length. Must be nonnegative.
+    //!
+    //! @note  If you set this to zero, the next call to getIEL() will auto-infer as usual.
+    void setIEL(double iel);
+
     //! @brief  Recompute, store, and return the Graph's ideal edge length.
     //!
     //! @note  As in the getIEL method, the value will be twice the average dimension

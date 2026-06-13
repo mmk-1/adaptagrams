@@ -613,6 +613,13 @@ double Graph::getIEL(void) {
     return m_iel;
 }
 
+void Graph::setIEL(double iel) {
+    if (iel < 0) {
+        throw std::invalid_argument("Graph::setIEL requires nonnegative value");
+    }
+    m_iel = iel;
+}
+
 double Graph::recomputeIEL(void) {
     autoInferIEL();
     return m_iel;

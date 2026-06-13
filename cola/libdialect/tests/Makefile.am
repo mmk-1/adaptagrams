@@ -13,6 +13,7 @@ check_PROGRAMS = \
   containedsegment01 destress destress02 destress_aca \
   expand01 expand02 expand03 expand04 expand05 expand06 expand07 expand08 expand09 \
   extrabdrygap faceset01 faceset02 hola10 hola11 hola12 \
+  hola_metrics \
   hola_arpa hola_belnet hola_cernet hola_claranet hola_garr hola_janetlense hola_slovakia \
   holalonenode hola_tree inserttrees01 leaflessroute01 leaflessroute02 lookupqas nbroctal \
   nearalign01 nearalign02 nearby negativesepco negativezero nodeconfig01 nudgeopt \
@@ -61,6 +62,7 @@ faceset02_SOURCES = faceset02.cpp
 hola10_SOURCES = hola10.cpp
 hola11_SOURCES = hola11.cpp
 hola12_SOURCES = hola12.cpp
+hola_metrics_SOURCES = hola_metrics.cpp
 hola_arpa_SOURCES = hola_arpa.cpp
 hola_belnet_SOURCES = hola_belnet.cpp
 hola_cernet_SOURCES = hola_cernet.cpp
