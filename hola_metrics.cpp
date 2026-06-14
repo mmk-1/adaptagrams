@@ -175,6 +175,7 @@ void printUsage() {
     std::cerr
         << "Usage: hola_metrics --input <input.tglf> "
         << "[--output-tglf <path>] [--output-svg <path>] "
+        << "[--no-artifacts] "
         << "[--iel <value> | --iel-scalar <value>]"
         << std::endl;
 }
@@ -188,6 +189,7 @@ int main(int argc, char **argv) {
     double iel = 0.0;
     bool hasIEL = false;
     double ielScalar = 1.0;
+    bool noArtifacts = false;
 
     if (argc == 2 && std::string(argv[1]).rfind("--", 0) != 0) {
         inputPath = argv[1];
@@ -205,6 +207,8 @@ int main(int argc, char **argv) {
                 hasIEL = true;
             } else if (arg == "--iel-scalar" && i + 1 < argc) {
                 ielScalar = std::stod(argv[++i]);
+            } else if (arg == "--no-artifacts") {
+                noArtifacts = true;
             } else {
                 printUsage();
                 return 1;
@@ -278,19 +282,23 @@ int main(int argc, char **argv) {
         area = box.w() * box.h();
     }
 
-    if (outputTglfPath.empty() || outputSvgPath.empty()) {
-        const std::string base = stripExtension(inputPath);
-        if (outputTglfPath.empty()) outputTglfPath = base + ".hola.tglf";
-        if (outputSvgPath.empty()) outputSvgPath = base + ".hola.svg";
-    }
+    if (!noArtifacts) {
+        if (outputTglfPath.empty() || outputSvgPath.empty()) {
+            const std::string base = stripExtension(inputPath);
+            if (outputTglfPath.empty()) outputTglfPath = base + ".hola.tglf";
+            if (outputSvgPath.empty()) outputSvgPath = base + ".hola.svg";
+        }
 
-    writeStringToFile(graph->writeTglf(), outputTglfPath);
-    writeStringToFile(graph->writeSvg(), outputSvgPath);
+        writeStringToFile(graph->writeTglf(), outputTglfPath);
+        writeStringToFile(graph->writeSvg(), outputSvgPath);
+    }
 
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "input=" << inputPath << std::endl;
-    std::cout << "output_tglf=" << outputTglfPath << std::endl;
-    std::cout << "output_svg=" << outputSvgPath << std::endl;
+    if (!noArtifacts) {
+        std::cout << "output_tglf=" << outputTglfPath << std::endl;
+        std::cout << "output_svg=" << outputSvgPath << std::endl;
+    }
     std::cout << "nodes=" << graph->getNumNodes() << std::endl;
     std::cout << "edges=" << graph->getNumEdges() << std::endl;
     std::cout << "runtime_ms=" << runtimeMs << std::endl;
